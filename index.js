@@ -1,6 +1,7 @@
 import express from "express";
 import * as dotnev from "dotenv";
 import cors from "cors";
+import connectDB from "./mongodb/connect.js";
 
 dotnev.config();
 
@@ -12,8 +13,13 @@ app.get("/", async (req, res) => {
   res.send("hello");
 });
 
-const startServer = () => {
-  app.listen(8080, () => console.log("Server is running."));
+const startServer = async () => {
+  try {
+    connectDB(process.env.MONGODB_URL);
+    app.listen(8080, () => console.log("Server is running."));
+  } catch (e) {
+    console.log(e.message);
+  }
 };
 
 startServer();
