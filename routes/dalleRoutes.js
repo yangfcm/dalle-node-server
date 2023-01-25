@@ -16,4 +16,22 @@ router.route("/").get((req, res) => {
   res.send("dalle route is working.");
 });
 
+router.route("/").post(async (req, res) => {
+  try {
+    const { prompt } = req.body;
+    const response = await openai.createImage({
+      prompt,
+      n: 1,
+      size: "1024x1024",
+      response_format: "b64_json",
+    });
+    const image = response.data.data[0].b64_json;
+    return res.status(200).json({ image });
+  } catch (error) {
+    return res
+      .status(400)
+      .send(error.response?.data?.error?.message || error.message);
+  }
+});
+
 export default router;
