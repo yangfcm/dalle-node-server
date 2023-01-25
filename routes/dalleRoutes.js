@@ -30,7 +30,7 @@ router.route("/").post(async (req, res) => {
   } catch (error) {
     return res
       .status(400)
-      .send(error.response?.data?.error?.message || error.message);
+      .send({ error: error.response?.data?.message || error.message });
   }
 });
 
