@@ -6,3 +6,9 @@ import Post from "../mongodb/models/post.js";
 dotenv.config();
 
 const router = express.Router();
+
+router.route("/").get((req, res) => {
+  res.send("post route is working.");
+});
+
+export default router;
